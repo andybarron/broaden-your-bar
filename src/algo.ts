@@ -1,4 +1,4 @@
-import { Ingredient, Recipe, RecipeItem } from "./models"
+import { Recipe } from "./models"
 
 /**
  * Given an array of available ingredients and all recipes, return an array of
@@ -22,7 +22,7 @@ export function computeAvailableRecipes(
     }
 
     if (shouldAdd) {
-      results.push(recipe.name)
+      results.push(recipe.id)
     }
   }
 

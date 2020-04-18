@@ -9,12 +9,26 @@ const ingredientData = {
   vodka: {},
   rum: {},
   whiskey: {},
-  coke: {},
+  bourbon: {},
+  coke: { name: "Coke" },
+  drPepper: { name: "Dr.Pepper" },
   tequila: {},
   grenadine: {},
+  tripleSec: { name: "triple sec" },
+  lemonJuice: { name: "lemon juice" },
+  limeJuice: { name: "lime juice" },
   orangeJuice: { name: "orange juice" },
+  simpleSyrup: { name: "simple syrup" },
   soda: {},
   coffeeLiqueur: { name: "coffee liqueur" },
+  marischinoCherry: {
+    name: "maraschino cherry",
+    namePlural: "maraschino cherries",
+    isGarnish: true,
+  },
+  salt: {
+    isGarnish: true,
+  },
 }
 
 type IngredientData = Omit<Ingredient, "id">
@@ -51,13 +65,15 @@ export const recipeMap: Map<string, Recipe> = new Map(
       id,
       {
         id,
-        name: id,
+        name: data.name,
         items: Object.entries(data.items).map(([id, data]) => {
           return {
             ingredientId: id,
             parts: (data as any).parts ?? 1, // TODO: fix shitty typing
+            extraInstructions: (data as any).extraInstructions ?? "",
           }
         }),
+        glass: data.glass,
       },
     ]
   }),

@@ -1,8 +1,9 @@
 interface RecipeData {
   name: string
   items: {
-    [ingredientId: string]: { parts?: number }
+    [ingredientId: string]: { parts?: number; extraInstructions?: string }
   }
+  glass?: string
 }
 
 type AllRecipeData = {
@@ -27,5 +28,25 @@ export const recipeData: AllRecipeData = {
       orangeJuice: {},
       grenadine: {},
     },
+  },
+  cherryBourbonSmash: {
+    name: "cherry bourbon smash",
+    items: {
+      bourbon: {},
+      lemonJuice: {},
+      marischinoCherry: { parts: 3, extraInstructions: "muddled" },
+      drPepper: {},
+    },
+  },
+  margarita: {
+    name: "margarita",
+    items: {
+      tequila: { parts: 3 },
+      limeJuice: { parts: 2 },
+      simpleSyrup: {},
+      tripleSec: {},
+      salt: {},
+    },
+    glass: "margarita glass",
   },
 }
