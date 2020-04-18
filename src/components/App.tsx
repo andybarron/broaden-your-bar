@@ -33,7 +33,7 @@ export function App() {
                     onChange={() => toggleIngredient(id)}
                   />
                 </label>
-                {!last && "  "}
+                {!last && " "}
               </span>
             )
           },
