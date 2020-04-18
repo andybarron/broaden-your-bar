@@ -3,7 +3,7 @@ import { Recipe, Ingredient } from "../models"
 
 export interface RecipeViewProps {
   ingredientMap: Map<string, Ingredient>
-  recipe: Recipe<string>
+  recipe: Recipe
 }
 
 export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
@@ -12,12 +12,8 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
     <div>
       <h3>{name}</h3>
       <ul>
-        {Object.entries(items).map(([id, item]) => {
+        {items.map(({ ingredientId: id, parts }) => {
           const key = id
-          if (!item) {
-            return <React.Fragment key={key} />
-          }
-          const parts = item.parts ?? 1
           const plural = parts !== 1
           const name = ingredientMap.get(id)?.name ?? `[${id}]`
           return (

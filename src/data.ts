@@ -19,7 +19,7 @@ const ingredientData = {
 /**
  * Recipe list input data
  */
-const recipeData: Record<string, Optional<RecipeData, "name">> = {
+const recipeData: AllRecipeData = {
   rumAndCoke: {
     name: "rum & coke",
     items: {
@@ -52,7 +52,16 @@ const _ingredientDataTypeCheck: Record<
   Optional<IngredientData, "name">
 > = ingredientData
 
-type RecipeData = Omit<Recipe<IngredientId>, "id">
+type AllRecipeData = {
+  [id: string]: RecipeData
+}
+
+interface RecipeData {
+  name: string
+  items: {
+    [ingredientId: string]: { parts?: number }
+  }
+}
 
 export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
   Object.entries(ingredientData).map(([id, data]) => {
@@ -67,14 +76,19 @@ export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
   }),
 )
 
-export const recipeMap: Map<string, Recipe<IngredientId>> = new Map(
+export const recipeMap: Map<string, Recipe> = new Map(
   Object.entries(recipeData).map(([id, data]) => {
     return [
       id,
       {
-        name: id,
-        ...data,
         id,
+        name: id,
+        items: Object.entries(data.items).map(([id, data]) => {
+          return {
+            ingredientId: id,
+            parts: (data as any).parts ?? 1, // TODO: fix shitty typing
+          }
+        }),
       },
     ]
   }),

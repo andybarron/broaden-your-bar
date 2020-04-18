@@ -3,16 +3,13 @@ export interface Ingredient {
   name: string
 }
 
-export interface Recipe<IngredientId extends string> {
+export interface Recipe {
   id: string
   name: string
-  items: RecipeItems<IngredientId>
-}
-
-export type RecipeItems<IngredientId extends string> = {
-  [K in IngredientId]?: RecipeItem
+  items: RecipeItem[]
 }
 
 export interface RecipeItem {
-  parts?: number
+  ingredientId: string
+  parts: number
 }
