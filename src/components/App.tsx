@@ -60,7 +60,8 @@ export function App() {
         <h2>What to buy</h2>
         {Boolean(nextIngredient) && (
           <span>
-            To maximize your drink list, you should buy: {nextIngredient}
+            To maximize your drink list, you should buy:{" "}
+            {nextIngredient?.join(" or ")}
           </span>
         )}
         {!nextIngredient && (

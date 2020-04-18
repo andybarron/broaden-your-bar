@@ -21,8 +21,8 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
           if (ingredientMap.get(id)?.isGarnish) {
             return (
               <li key={key}>
-                {parts} {plural ? namePlural : name} {extraInstructions}{" "}
-                {"as garnish"}
+                {parts === 0 ? "" : parts} {plural ? namePlural : name}{" "}
+                {extraInstructions} {"as garnish"}
               </li>
             )
           } else {

@@ -37,7 +37,7 @@ export function computeAvailableRecipes(
 export function computeNextIngredient(
   ingredients: string[],
   allRecipes: Recipe[],
-): string | null {
+): string[] | null {
   // Find each recipe that's one ingredient from being complete,
   // Add those to a map that keeps track of how many recipies would be doable with them
 
@@ -69,15 +69,18 @@ export function computeNextIngredient(
 
   // Find which ingredient in map has largest value
 
-  let bestIngredient = null
-  let currBestCountNewRecipies = 0
+  let bestIngredients = []
+  let currBestCountNewRecipies = -1
 
   for (let item of map.keys()) {
     if (map.get(item) > currBestCountNewRecipies) {
       currBestCountNewRecipies = map.get(item)
-      bestIngredient = item
+      bestIngredients = []
+      bestIngredients.push(item)
+    } else if (map.get(item) === currBestCountNewRecipies) {
+      bestIngredients.push(item)
     }
   }
 
-  return bestIngredient
+  return bestIngredients
 }
