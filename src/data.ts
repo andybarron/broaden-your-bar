@@ -39,7 +39,7 @@ const recipeData: Record<string, Optional<RecipeData, "name">> = {
 
 type IngredientData = Omit<Ingredient, "id">
 
-type IngredientId = keyof typeof ingredientData
+export type IngredientId = keyof typeof ingredientData
 
 // compile-time check for ingredientData, since annotating it would break our
 // nice IngredientId definition above
@@ -51,10 +51,10 @@ const _ingredientDataTypeCheck: Record<
 
 type RecipeData = Omit<Recipe<IngredientId>, "id">
 
-export const ingredientMap: Map<string, Ingredient> = new Map(
+export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
   Object.entries(ingredientData).map(([id, data]) => {
     return [
-      id,
+      id as any,
       {
         name: id,
         ...data,
