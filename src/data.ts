@@ -40,6 +40,9 @@ const recipeData: Record<string, Optional<RecipeData, "name">> = {
 type IngredientData = Omit<Ingredient, "id">
 
 export type IngredientId = keyof typeof ingredientData
+export type IngredientChecklist = {
+  [key in IngredientId]?: boolean
+}
 
 // compile-time check for ingredientData, since annotating it would break our
 // nice IngredientId definition above

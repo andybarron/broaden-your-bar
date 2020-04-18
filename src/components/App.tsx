@@ -1,9 +1,5 @@
 import React from "react"
-import { IngredientId, ingredientMap } from "../data"
-
-type IngredientChecklist = {
-  [key in IngredientId]?: boolean
-}
+import { IngredientId, IngredientChecklist, ingredientMap } from "../data"
 
 export function App() {
   const [checklist, setChecklist] = React.useState<IngredientChecklist>({})
