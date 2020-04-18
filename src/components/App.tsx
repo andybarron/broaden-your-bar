@@ -16,7 +16,6 @@ export function App() {
   ) as IngredientId[]
 
   const availableRecipes = React.useMemo(() => {
-    return ["tequilaSunrise"] // TODO FIXME
     return computeAvailableRecipes(availableIngredients, [
       ...recipeMap.values(),
     ])
