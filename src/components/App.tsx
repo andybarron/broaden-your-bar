@@ -1,8 +1,30 @@
 import React from "react"
-import { IngredientId, IngredientChecklist, ingredientMap } from "../data"
+import {
+  IngredientId,
+  IngredientChecklist,
+  ingredientMap,
+  recipeMap,
+} from "../data"
+import { computeAvailableRecipes, computeNextIngredient } from "../algo"
+import { RecipeView } from "./RecipeView"
 
 export function App() {
   const [checklist, setChecklist] = React.useState<IngredientChecklist>({})
+
+  const availableIngredients = Object.keys(checklist).filter(
+    (id) => checklist[id as IngredientId],
+  ) as IngredientId[]
+
+  const availableRecipes = React.useMemo(() => {
+    return ["tequilaSunrise"] // TODO FIXME
+    return computeAvailableRecipes(availableIngredients, [
+      ...recipeMap.values(),
+    ])
+  }, [availableIngredients])
+
+  const nextIngredient = React.useMemo(() => {
+    return computeNextIngredient(availableIngredients, [...recipeMap.values()])
+  }, [availableIngredients])
 
   function toggleIngredient(id: IngredientId) {
     setChecklist((prev) => ({
@@ -34,6 +56,36 @@ export function App() {
             )
           },
         )}
+      </div>
+      <div>
+        <h2>What to buy</h2>
+        {Boolean(nextIngredient) && (
+          <span>
+            To maximize your drink list, you should buy: {nextIngredient}
+          </span>
+        )}
+        {!nextIngredient && (
+          <span>Buy whatever you want next, it doesn't matter</span>
+        )}
+      </div>
+      <div>
+        <h2>Available recipes</h2>
+        <div>
+          {availableRecipes.map((id) => {
+            const key = id
+            const recipe = recipeMap.get(id)
+            if (!recipe) {
+              return <React.Fragment key={key} />
+            }
+            return (
+              <RecipeView
+                key={key}
+                ingredientMap={ingredientMap}
+                recipe={recipe}
+              />
+            )
+          })}
+        </div>
       </div>
     </div>
   )
