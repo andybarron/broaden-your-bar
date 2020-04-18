@@ -22,12 +22,12 @@ export function App() {
             return (
               <span>
                 <label key={id}>
-                  {name}{" "}
                   <input
                     type="checkbox"
                     checked={Boolean(checklist[id])}
                     onChange={() => toggleIngredient(id)}
                   />
+                  {name}{" "}
                 </label>
                 {!last && " "}
               </span>
