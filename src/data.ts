@@ -1,5 +1,6 @@
 import { Optional } from "utility-types"
 import { Ingredient, Recipe } from "./models"
+import { recipeData } from "./data/recipeData"
 
 /**
  * Ingredient list input data
@@ -16,27 +17,6 @@ const ingredientData = {
   coffeeLiqueur: { name: "coffee liqueur" },
 }
 
-/**
- * Recipe list input data
- */
-const recipeData: AllRecipeData = {
-  rumAndCoke: {
-    name: "rum & coke",
-    items: {
-      rum: {},
-      coke: {},
-    },
-  },
-  tequilaSunrise: {
-    name: "tequila sunrise",
-    items: {
-      tequila: {},
-      orangeJuice: {},
-      grenadine: {},
-    },
-  },
-}
-
 type IngredientData = Omit<Ingredient, "id">
 
 export type IngredientId = keyof typeof ingredientData
@@ -51,17 +31,6 @@ const _ingredientDataTypeCheck: Record<
   IngredientId,
   Optional<IngredientData, "name">
 > = ingredientData
-
-type AllRecipeData = {
-  [id: string]: RecipeData
-}
-
-interface RecipeData {
-  name: string
-  items: {
-    [ingredientId: string]: { parts?: number }
-  }
-}
 
 export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
   Object.entries(ingredientData).map(([id, data]) => {
