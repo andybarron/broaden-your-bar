@@ -81,7 +81,7 @@ export function computeNextIngredient(
     }
   }
 
-  // Find the maximum number of matches recipes
+  // Find the maximum number of matched recipes
   const valuesArray = [...ingredientToNumRecipeMap.values()]
   const bestCount = valuesArray.reduce(
     (max, value) => (value > max ? value : max),
