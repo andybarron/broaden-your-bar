@@ -28,6 +28,7 @@ const ingredientData = {
   },
   salt: {
     isGarnish: true,
+    isNonEnumerated: true,
   },
 }
 

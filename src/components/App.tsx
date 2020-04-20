@@ -12,7 +12,7 @@ export function App() {
   const [checklist, setChecklist] = React.useState<IngredientChecklist>({})
 
   const availableIngredients = Object.keys(checklist).filter(
-    (id) => checklist[id as IngredientId],
+    id => checklist[id as IngredientId],
   ) as IngredientId[]
 
   const availableRecipes = React.useMemo(() => {
@@ -26,7 +26,7 @@ export function App() {
   }, [availableIngredients])
 
   function toggleIngredient(id: IngredientId) {
-    setChecklist((prev) => ({
+    setChecklist(prev => ({
       ...prev,
       [id]: !prev[id],
     }))
@@ -71,7 +71,7 @@ export function App() {
       <div>
         <h2>Available recipes</h2>
         <div>
-          {availableRecipes.map((id) => {
+          {availableRecipes.map(id => {
             const key = id
             const recipe = recipeMap.get(id)
             if (!recipe) {
