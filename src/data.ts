@@ -28,6 +28,7 @@ const ingredientData = {
   },
   salt: {
     isGarnish: true,
+    isNonEnumerated: true,
   },
 }
 
@@ -41,10 +42,7 @@ export type IngredientChecklist = {
 // compile-time check for ingredientData, since annotating it would break our
 // nice IngredientId definition above
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _ingredientDataTypeCheck: Record<
-  IngredientId,
-  Optional<IngredientData, "name">
-> = ingredientData
+const _ingredientDataTypeCheck: Record<IngredientId, Optional<IngredientData, "name">> = ingredientData
 
 export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
   Object.entries(ingredientData).map(([id, data]) => {

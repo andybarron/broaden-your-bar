@@ -3,6 +3,7 @@ export interface Ingredient {
   name: string
   namePlural?: string
   isGarnish?: boolean
+  isNonEnumerated?: boolean
 }
 
 export interface Recipe {
