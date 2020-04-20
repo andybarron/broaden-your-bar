@@ -5,7 +5,10 @@ import { ingredientMap } from "./data"
  * Given an array of available ingredients and all recipes, return an array of
  * recipe IDs which could be made given the ingredients at hand
  */
-export function computeAvailableRecipes(ingredients: string[], allRecipes: Recipe[]): string[] {
+export function computeAvailableRecipes(
+  ingredients: string[],
+  allRecipes: Recipe[],
+): string[] {
   let set = new Set(ingredients)
   let results = []
 
@@ -32,11 +35,14 @@ export function computeAvailableRecipes(ingredients: string[], allRecipes: Recip
  * ingredient to buy which would maximize the increase in available recipes, or null
  * if all recipes are available
  */
-export function computeNextIngredient(ingredients: string[], allRecipes: Recipe[]): string[] | null {
+export function computeNextIngredient(
+  ingredients: string[],
+  allRecipes: Recipe[],
+): string[] | null {
   // Find each recipe that's one ingredient from being complete,
   // Add those to a map that keeps track of how many recipies would be doable with them
   const alreadySelectedIngredients = new Set(ingredients)
-  const missingIngredientToNumPossibleRecipeMap = new Map()
+  const ingredientToNumRecipeMap = new Map()
 
   for (const recipe of allRecipes) {
     let hasExactlyOneMissingIngredient = false
@@ -64,23 +70,26 @@ export function computeNextIngredient(ingredients: string[], allRecipes: Recipe[
 
     if (hasExactlyOneMissingIngredient) {
       // If there is exactly one missing, we'll add it to our map of possible recipes
-      if (missingIngredientToNumPossibleRecipeMap.has(missingIngredientId)) {
-        missingIngredientToNumPossibleRecipeMap.set(
+      if (ingredientToNumRecipeMap.has(missingIngredientId)) {
+        ingredientToNumRecipeMap.set(
           missingIngredientId,
-          missingIngredientToNumPossibleRecipeMap.get(missingIngredientId) + 1,
+          ingredientToNumRecipeMap.get(missingIngredientId) + 1,
         )
       } else {
-        missingIngredientToNumPossibleRecipeMap.set(missingIngredientId, 1)
+        ingredientToNumRecipeMap.set(missingIngredientId, 1)
       }
     }
   }
 
   // Find the maximum number of matches recipes
-  const valuesArray = [...missingIngredientToNumPossibleRecipeMap.values()]
-  const bestCount = valuesArray.reduce((max, value) => (value > max ? value : max), valuesArray[0])
+  const valuesArray = [...ingredientToNumRecipeMap.values()]
+  const bestCount = valuesArray.reduce(
+    (max, value) => (value > max ? value : max),
+    valuesArray[0],
+  )
 
   // get all the ingredients that have that amount of matched recipes
-  const bestIngredients = [...missingIngredientToNumPossibleRecipeMap.entries()]
+  const bestIngredients = [...ingredientToNumRecipeMap.entries()]
     .filter(a => a[1] === bestCount)
     .map(a => ingredientMap.get(a[0])?.name ?? "")
 

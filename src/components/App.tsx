@@ -1,15 +1,24 @@
 import React from "react"
-import { IngredientId, IngredientChecklist, ingredientMap, recipeMap } from "../data"
+import {
+  IngredientId,
+  IngredientChecklist,
+  ingredientMap,
+  recipeMap,
+} from "../data"
 import { computeAvailableRecipes, computeNextIngredient } from "../algo"
 import { RecipeView } from "./RecipeView"
 
 export function App() {
   const [checklist, setChecklist] = React.useState<IngredientChecklist>({})
 
-  const availableIngredients = Object.keys(checklist).filter(id => checklist[id as IngredientId]) as IngredientId[]
+  const availableIngredients = Object.keys(checklist).filter(
+    id => checklist[id as IngredientId],
+  ) as IngredientId[]
 
   const availableRecipes = React.useMemo(() => {
-    return computeAvailableRecipes(availableIngredients, [...recipeMap.values()])
+    return computeAvailableRecipes(availableIngredients, [
+      ...recipeMap.values(),
+    ])
   }, [availableIngredients])
 
   const nextIngredient = React.useMemo(() => {
@@ -28,25 +37,36 @@ export function App() {
       <h1>Broaden your bar!</h1>
       <div>
         <h2>Ingredients</h2>
-        {[...[...ingredientMap.entries()].entries()].map(([index, [id, { name }]]) => {
-          const last = index === ingredientMap.size - 1
-          return (
-            <span>
-              <label key={id}>
-                <input type="checkbox" checked={Boolean(checklist[id])} onChange={() => toggleIngredient(id)} />
-                {name}{" "}
-              </label>
-              {!last && " "}
-            </span>
-          )
-        })}
+        {[...[...ingredientMap.entries()].entries()].map(
+          ([index, [id, { name }]]) => {
+            const last = index === ingredientMap.size - 1
+            return (
+              <span>
+                <label key={id}>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(checklist[id])}
+                    onChange={() => toggleIngredient(id)}
+                  />
+                  {name}{" "}
+                </label>
+                {!last && " "}
+              </span>
+            )
+          },
+        )}
       </div>
       <div>
         <h2>What to buy</h2>
         {Boolean(nextIngredient) && (
-          <span>To maximize your drink list, you should buy: {nextIngredient?.join(" or ")}</span>
+          <span>
+            To maximize your drink list, you should buy:{" "}
+            {nextIngredient?.join(" or ")}
+          </span>
         )}
-        {!nextIngredient && <span>Buy whatever you want next, it doesn't matter</span>}
+        {!nextIngredient && (
+          <span>Buy whatever you want next, it doesn't matter</span>
+        )}
       </div>
       <div>
         <h2>Available recipes</h2>
@@ -57,7 +77,13 @@ export function App() {
             if (!recipe) {
               return <React.Fragment key={key} />
             }
-            return <RecipeView key={key} ingredientMap={ingredientMap} recipe={recipe} />
+            return (
+              <RecipeView
+                key={key}
+                ingredientMap={ingredientMap}
+                recipe={recipe}
+              />
+            )
           })}
         </div>
       </div>
