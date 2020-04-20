@@ -46,8 +46,8 @@ export function computeNextIngredient(ingredients: string[], allRecipes: Recipe[
     for (const ingredient of recipe.items) {
       const ingredientId = ingredient.ingredientId
 
-      // if the ingredient is not already in our cabinet, increase the number of possible
-      // recipes for this ingredient
+      // if the ingredient is not already selected
+      // increase the number of possible recipes for this ingredient
       if (!alreadySelectedIngredients.has(ingredientId)) {
         // If we've already found a missing ingredient,
         // then this receipe has too many missing ingredients
@@ -75,24 +75,14 @@ export function computeNextIngredient(ingredients: string[], allRecipes: Recipe[
     }
   }
 
-  // Find which ingredient in map has the most available recipes
-  let bestIngredients = []
-  let currBestCountNewRecipies = -1
+  // Find the maximum number of matches recipes
+  const valuesArray = [...missingIngredientToNumPossibleRecipeMap.values()]
+  const bestCount = valuesArray.reduce((max, value) => (value > max ? value : max), valuesArray[0])
 
-  for (const [ingredientId, numRecipes] of missingIngredientToNumPossibleRecipeMap) {
-    const ingredient = ingredientMap.get(ingredientId)
-    var itemName =
-      ingredient != null ? (Boolean(ingredient.name) ? ingredient.name : ingredientId) : "wtf are you doing"
-
-    // If we've found an ingredient with more matches, reset list of best ingredients and add this one
-    if (numRecipes > currBestCountNewRecipies) {
-      currBestCountNewRecipies = numRecipes
-      bestIngredients = []
-      bestIngredients.push(itemName)
-    } else if (numRecipes === currBestCountNewRecipies) {
-      bestIngredients.push(itemName)
-    }
-  }
+  // get all the ingredients that have that amount of matched recipes
+  const bestIngredients = [...missingIngredientToNumPossibleRecipeMap.entries()]
+    .filter(a => a[1] === bestCount)
+    .map(a => ingredientMap.get(a[0])?.name ?? "")
 
   return bestIngredients
 }
