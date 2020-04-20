@@ -11,6 +11,7 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
   return (
     <div>
       <h3>{name}</h3>
+      <span>{glass !== undefined && glass.length !== 0 ? "Serve in a " + glass : ""}</span>
       <ul>
         {items.map(({ ingredientId: id, parts, extraInstructions }) => {
           const key = id
@@ -22,8 +23,7 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
           if (ingredientMap.get(id)?.isGarnish) {
             return (
               <li key={key}>
-                {isNonEnumerated ? "" : parts} {plural ? namePlural : name}{" "}
-                {extraInstructions} {"as garnish"}
+                {isNonEnumerated ? "" : parts} {plural ? namePlural : name} {extraInstructions} {"as garnish"}
               </li>
             )
           } else {
@@ -34,8 +34,6 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
             )
           }
         })}
-        {glass !== undefined && glass?.length !== 0 ? "Serve in a " : ""}{" "}
-        {glass}
       </ul>
     </div>
   )

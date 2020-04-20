@@ -81,7 +81,8 @@ export function computeNextIngredient(ingredients: string[], allRecipes: Recipe[
 
   for (const [ingredientId, numRecipes] of missingIngredientToNumPossibleRecipeMap) {
     const ingredient = ingredientMap.get(ingredientId)
-    var itemName = ingredient != null ? (!!ingredient.name ? ingredient.name : ingredientId) : "wtf are you doing"
+    var itemName =
+      ingredient != null ? (Boolean(ingredient.name) ? ingredient.name : ingredientId) : "wtf are you doing"
 
     // If we've found an ingredient with more matches, reset list of best ingredients and add this one
     if (numRecipes > currBestCountNewRecipies) {
