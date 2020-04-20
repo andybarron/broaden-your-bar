@@ -9,24 +9,10 @@ export function computeAvailableRecipes(
   ingredients: string[],
   allRecipes: Recipe[],
 ): string[] {
-  let set = new Set(ingredients)
-  let results = []
-
-  for (const recipe of allRecipes) {
-    let shouldAdd = true
-
-    for (const ingredient of recipe.items) {
-      if (!set.has(ingredient.ingredientId)) {
-        shouldAdd = false
-        break
-      }
-    }
-
-    if (shouldAdd) {
-      results.push(recipe.id)
-    }
-  }
-
+  let selectedIngredients = new Set(ingredients)
+  let results = allRecipes
+    .filter(r => r.items.every(i => selectedIngredients.has(i.ingredientId)))
+    .map(r => r.id)
   return results
 }
 
