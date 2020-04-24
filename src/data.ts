@@ -42,13 +42,16 @@ export const recipeMap: Map<string, Recipe> = new Map(
       {
         id,
         name: data.name,
-        items: Object.entries(data.items).map(([id, data]) => {
-          return {
-            ingredientId: id,
-            parts: (data as any).parts ?? 1, // TODO: fix shitty typing
-            extraInstructions: (data as any).extraInstructions ?? "",
-          }
-        }),
+        items: sortBy(
+          Object.entries(data.items).map(([id, data]) => {
+            return {
+              ingredientId: id,
+              parts: (data as any).parts ?? 1, // TODO: fix shitty typing
+              extraInstructions: (data as any).extraInstructions ?? "",
+            }
+          }),
+          item => (ingredientData[item.ingredientId].isGarnish ? 1 : 0),
+        ),
         glass: data.glass,
       },
     ]
