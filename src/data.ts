@@ -1,40 +1,12 @@
 import { Optional } from "utility-types"
 import { Ingredient, Recipe } from "./models"
 import { recipeData } from "./data/recipeData"
-
-/**
- * Ingredient list input data
- */
-const ingredientData = {
-  vodka: {},
-  rum: {},
-  whiskey: {},
-  bourbon: {},
-  coke: { name: "Coke" },
-  drPepper: { name: "Dr.Pepper" },
-  tequila: {},
-  grenadine: {},
-  tripleSec: { name: "triple sec" },
-  lemonJuice: { name: "lemon juice" },
-  limeJuice: { name: "lime juice" },
-  orangeJuice: { name: "orange juice" },
-  simpleSyrup: { name: "simple syrup" },
-  soda: {},
-  coffeeLiqueur: { name: "coffee liqueur" },
-  marischinoCherry: {
-    name: "maraschino cherry",
-    namePlural: "maraschino cherries",
-    isGarnish: true,
-  },
-  salt: {
-    isGarnish: true,
-    isNonEnumerated: true,
-  },
-}
+import { ingredientData } from "./data/ingredientData"
+import sortBy from "lodash/sortBy"
 
 type IngredientData = Omit<Ingredient, "id">
 
-export type IngredientId = keyof typeof ingredientData
+export type IngredientId = string
 export type IngredientChecklist = {
   [key in IngredientId]?: boolean
 }
@@ -47,8 +19,11 @@ const _ingredientDataTypeCheck: Record<
   Optional<IngredientData, "name">
 > = ingredientData
 
+const entries = Object.entries(ingredientData)
+const sortedEntries = sortBy(entries, entry => entry[1].name?.toLowerCase)
+
 export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
-  Object.entries(ingredientData).map(([id, data]) => {
+  sortedEntries.map(([id, data]) => {
     return [
       id as any,
       {
