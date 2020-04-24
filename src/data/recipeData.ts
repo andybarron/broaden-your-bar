@@ -15,14 +15,14 @@ type AllRecipeData = {
  */
 export const recipeData: AllRecipeData = {
   rumAndCoke: {
-    name: "rum & coke",
+    name: "Rum & Coke",
     items: {
       rum: {},
       coke: {},
     },
   },
   tequilaSunrise: {
-    name: "tequila sunrise",
+    name: "Tequila sunrise",
     items: {
       tequila: {},
       orangeJuice: {},
@@ -30,7 +30,7 @@ export const recipeData: AllRecipeData = {
     },
   },
   cherryBourbonSmash: {
-    name: "cherry bourbon smash",
+    name: "Cherry bourbon smash",
     items: {
       bourbon: {},
       lemonJuice: {},
@@ -39,7 +39,7 @@ export const recipeData: AllRecipeData = {
     },
   },
   margarita: {
-    name: "margarita",
+    name: "Margarita",
     items: {
       tequila: { parts: 3 },
       limeJuice: { parts: 2 },

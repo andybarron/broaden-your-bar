@@ -1,5 +1,6 @@
 import React from "react"
 import { Recipe, Ingredient } from "../models"
+import { Typography } from "@material-ui/core"
 
 export interface RecipeViewProps {
   ingredientMap: Map<string, Ingredient>
@@ -10,10 +11,12 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
   const { name, items, glass } = recipe
   return (
     <div>
-      <h3>{name}</h3>
-      <span>
+      <Typography component="h3">
+        <b>{name}</b>
+      </Typography>
+      <Typography>
         {glass !== undefined && glass.length !== 0 ? "Serve in a " + glass : ""}
-      </span>
+      </Typography>
       <ul>
         {items.map(({ ingredientId: id, parts, extraInstructions }) => {
           const key = id
@@ -25,14 +28,18 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
           if (ingredientMap.get(id)?.isGarnish) {
             return (
               <li key={key}>
-                {isNonEnumerated ? "" : parts} {plural ? namePlural : name}{" "}
-                {extraInstructions} {"as garnish"}
+                <Typography component="span">
+                  {isNonEnumerated ? "" : parts} {plural ? namePlural : name}{" "}
+                  {extraInstructions} {"as garnish"}
+                </Typography>
               </li>
             )
           } else {
             return (
               <li key={key}>
-                {parts} {plural ? "parts" : "part"} {name}
+                <Typography component="span">
+                  {parts} {plural ? "parts" : "part"} {name}
+                </Typography>
               </li>
             )
           }

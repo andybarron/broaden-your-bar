@@ -1,4 +1,5 @@
 import React from "react"
+import { Container, Typography, Grid, Box } from "@material-ui/core"
 import {
   IngredientId,
   IngredientChecklist,
@@ -33,60 +34,74 @@ export function App() {
   }
 
   return (
-    <div>
-      <h1>Broaden your bar!</h1>
+    <Container>
       <div>
-        <h2>Ingredients</h2>
-        {[...[...ingredientMap.entries()].entries()].map(
-          ([index, [id, { name }]]) => {
-            const last = index === ingredientMap.size - 1
-            return (
-              <span>
-                <label key={id}>
-                  <input
-                    type="checkbox"
-                    checked={Boolean(checklist[id])}
-                    onChange={() => toggleIngredient(id)}
-                  />
-                  {name}{" "}
-                </label>
-                {!last && " "}
-              </span>
-            )
-          },
-        )}
+        <Typography variant="h4" component="h1" gutterBottom>
+          Broaden your bar!
+        </Typography>
+        <Box mb={2}>
+          <Typography variant="h5" component="h2" gutterBottom>
+            Ingredients
+          </Typography>
+          <Grid container>
+            {[...[...ingredientMap.entries()].entries()].map(
+              ([index, [id, { name }]]) => {
+                const last = index === ingredientMap.size - 1
+                return (
+                  <Grid container item xs={2} key={id}>
+                    <Typography>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={Boolean(checklist[id])}
+                          onChange={() => toggleIngredient(id)}
+                        />
+                        {name}{" "}
+                      </label>
+                      {!last && " "}
+                    </Typography>
+                  </Grid>
+                )
+              },
+            )}
+          </Grid>
+        </Box>
+        <Box mb={2}>
+          <Typography variant="h5" component="h2" gutterBottom>
+            What to buy
+          </Typography>
+          {Boolean(nextIngredient) && (
+            <Typography component="span">
+              To maximize your drink list, you should buy:{" "}
+              {nextIngredient?.join(" or ")}
+            </Typography>
+          )}
+          {!nextIngredient && (
+            <span>Buy whatever you want next, it doesn't matter</span>
+          )}
+        </Box>
+        <Box mb={2}>
+          <Typography variant="h5" component="h2" gutterBottom>
+            Available recipes
+          </Typography>
+          <div>
+            {availableRecipes.map(id => {
+              const key = id
+              const recipe = recipeMap.get(id)
+              if (!recipe) {
+                return <React.Fragment key={key} />
+              }
+              return (
+                <RecipeView
+                  key={key}
+                  ingredientMap={ingredientMap}
+                  recipe={recipe}
+                />
+              )
+            })}
+          </div>
+        </Box>
       </div>
-      <div>
-        <h2>What to buy</h2>
-        {Boolean(nextIngredient) && (
-          <span>
-            To maximize your drink list, you should buy:{" "}
-            {nextIngredient?.join(" or ")}
-          </span>
-        )}
-        {!nextIngredient && (
-          <span>Buy whatever you want next, it doesn't matter</span>
-        )}
-      </div>
-      <div>
-        <h2>Available recipes</h2>
-        <div>
-          {availableRecipes.map(id => {
-            const key = id
-            const recipe = recipeMap.get(id)
-            if (!recipe) {
-              return <React.Fragment key={key} />
-            }
-            return (
-              <RecipeView
-                key={key}
-                ingredientMap={ingredientMap}
-                recipe={recipe}
-              />
-            )
-          })}
-        </div>
-      </div>
-    </div>
+    </Container>
   )
 }
