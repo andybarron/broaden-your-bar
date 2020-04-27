@@ -1,5 +1,15 @@
 [
   {
+    "id": "bitters",
+    "name": "bitters",
+    "unit": "dash",
+    "unitPlural": "dashes"
+  },
+  {
+    "name": "bourbon",
+    "id": "bourbon"
+  },
+  {
     "name": "coffee liqueur",
     "id": "coffeeLiqueur"
   },
@@ -10,6 +20,10 @@
   {
     "name": "Dr.Pepper",
     "id": "drPepper"
+  },
+  {
+    "name": "grenadine",
+    "id": "grenadine"
   },
   {
     "name": "lemon juice",
@@ -30,20 +44,9 @@
     "id": "orangeJuice"
   },
   {
-    "name": "simple syrup",
-    "id": "simpleSyrup"
-  },
-  {
-    "name": "triple sec",
-    "id": "tripleSec"
-  },
-  {
-    "name": "bourbon",
-    "id": "bourbon"
-  },
-  {
-    "name": "grenadine",
-    "id": "grenadine"
+    "id": "orangePeel",
+    "name": "orange peel",
+    "isGarnish": true
   },
   {
     "name": "rum",
@@ -55,12 +58,27 @@
     "id": "salt"
   },
   {
+    "name": "simple syrup",
+    "id": "simpleSyrup"
+  },
+  {
     "name": "soda",
     "id": "soda"
   },
   {
+    "name": "sugar cube",
+    "namePlural": "sugar cubes",
+    "id": "sugarCube",
+    "unit": "",
+    "unitPlural": ""
+  },
+  {
     "name": "tequila",
     "id": "tequila"
+  },
+  {
+    "name": "triple sec",
+    "id": "tripleSec"
   },
   {
     "name": "vodka",

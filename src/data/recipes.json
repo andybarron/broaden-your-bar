@@ -50,6 +50,30 @@
     "glass": "margarita glass"
   },
   {
+    "id": "oldFashioned",
+    "name": "Old fashioned",
+    "glass": "",
+    "items": [
+      {
+        "ingredientId": "whiskey",
+        "parts": 5
+      },
+      {
+        "ingredientId": "sugarCube",
+        "parts": 1,
+        "extraInstructions": "muddled"
+      },
+      {
+        "ingredientId": "orangePeel",
+        "parts": 0
+      },
+      {
+        "ingredientId": "bitters",
+        "parts": 1
+      }
+    ]
+  },
+  {
     "id": "rumAndCoke",
     "name": "Rum & Coke",
     "items": [

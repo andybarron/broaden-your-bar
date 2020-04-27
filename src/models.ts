@@ -3,6 +3,8 @@ export interface Ingredient {
   name: string
   namePlural?: string
   isGarnish?: boolean
+  unit?: string
+  unitPlural?: string
 }
 
 export interface Recipe {

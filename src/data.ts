@@ -29,9 +29,9 @@ export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
     return [
       id as any,
       {
+        id: id,
         name: id,
         ...data,
-        id,
       },
     ]
   }),
