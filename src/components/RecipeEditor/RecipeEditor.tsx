@@ -1,5 +1,14 @@
 import React from "react"
-import { Container, Typography, Grid, Button, Chip } from "@material-ui/core"
+import {
+  Container,
+  Typography,
+  Grid,
+  Button,
+  Chip,
+  IconButton,
+  Snackbar,
+} from "@material-ui/core"
+import CloseIcon from "@material-ui/icons/Close"
 import { ingredientMap, recipeMap } from "../../data"
 import { Ingredient, Recipe } from "../../models"
 import { RecipeDialog } from "./RecipeDialog"
@@ -26,6 +35,17 @@ export function RecipeEditor() {
   const [recipes, setRecipes] = React.useState<Recipe[]>([
     ...recipeMap.values(),
   ])
+
+  // Snackbar
+  const [openSnackbar, setOpenSnackbar] = React.useState(false)
+
+  const handleOpenSnackbar = () => {
+    setOpenSnackbar(true)
+  }
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false)
+  }
 
   // Add Ingredient Methods
   const handleCreateNewIngredient = (ingredient: Ingredient) => {
@@ -159,12 +179,53 @@ export function RecipeEditor() {
       <br />
       <Grid container spacing={1}>
         <Grid item xs={6}>
-          <pre>{JSON.stringify(ingredients, null, 2)}</pre>
+          <Chip
+            label="Copy Ingredients JSON"
+            color="primary"
+            onClick={() => {
+              navigator.clipboard.writeText(
+                JSON.stringify(ingredients, null, 2),
+              )
+              handleOpenSnackbar()
+            }}
+          />
+          <pre id="ingredients-json">
+            {JSON.stringify(ingredients, null, 2)}
+          </pre>
         </Grid>
         <Grid item xs={6}>
+          <Chip
+            label="Copy Recipe JSON"
+            color="primary"
+            onClick={() => {
+              navigator.clipboard.writeText(JSON.stringify(recipes, null, 2))
+              handleOpenSnackbar()
+            }}
+          />
           <pre>{JSON.stringify(recipes, null, 2)}</pre>
         </Grid>
       </Grid>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        message="Copied!"
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              color="inherit"
+              onClick={handleCloseSnackbar}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
     </Container>
   )
 }
