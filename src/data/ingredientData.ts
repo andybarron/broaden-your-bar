@@ -1,35 +1,27 @@
-/**
- * Ingredient list input data
- */
-export const ingredientData: IngredientData = {
-  bourbon: {},
-  coffeeLiqueur: { name: "coffee liqueur" },
-  coke: { name: "Coke" },
-  drPepper: { name: "Dr.Pepper" },
-  grenadine: {},
-  lemonJuice: { name: "lemon juice" },
-  limeJuice: { name: "lime juice" },
-  marischinoCherry: {
-    name: "maraschino cherry",
-    namePlural: "maraschino cherries",
-    isGarnish: true,
-  },
-  orangeJuice: { name: "orange juice" },
-  rum: {},
-  salt: { isGarnish: true, isNonEnumerated: true },
-  simpleSyrup: { name: "simple syrup" },
-  soda: {},
-  tequila: {},
-  tripleSec: { name: "triple sec" },
-  vodka: {},
-  whiskey: {},
-}
+import data from "./ingredients.json"
 
 interface IngredientData {
   [id: string]: {
     name?: string
     namePlural?: string
-    isGarnish?: boolean //TODO garnish type
-    isNonEnumerated?: boolean
+    isGarnish?: boolean // TODO garnish type
   }
 }
+
+const parseIngredientData = () => {
+  const ingredientData: IngredientData = {}
+  data.forEach(ingredient => {
+    ingredientData[ingredient.id] = {
+      name: ingredient.name,
+      namePlural: ingredient.namePlural ? ingredient.namePlural : undefined,
+      isGarnish: ingredient.isGarnish ? ingredient.isGarnish : undefined,
+    }
+  })
+
+  return ingredientData
+}
+
+/**
+ * Ingredient list input data
+ */
+export const ingredientData: IngredientData = parseIngredientData()

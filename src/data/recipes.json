@@ -1,0 +1,84 @@
+[
+  {
+    "id": "cherryBourbonSmash",
+    "name": "Cherry bourbon smash",
+    "items": [
+      {
+        "ingredientId": "bourbon",
+        "parts": 1
+      },
+      {
+        "ingredientId": "lemonJuice",
+        "parts": 1
+      },
+      {
+        "ingredientId": "drPepper",
+        "parts": 1
+      },
+      {
+        "ingredientId": "marischinoCherry",
+        "parts": 3,
+        "extraInstructions": "muddled"
+      }
+    ]
+  },
+  {
+    "id": "margarita",
+    "name": "Margarita",
+    "items": [
+      {
+        "ingredientId": "tequila",
+        "parts": 3
+      },
+      {
+        "ingredientId": "limeJuice",
+        "parts": 2
+      },
+      {
+        "ingredientId": "simpleSyrup",
+        "parts": 1
+      },
+      {
+        "ingredientId": "tripleSec",
+        "parts": 1
+      },
+      {
+        "ingredientId": "salt",
+        "parts": 0
+      }
+    ],
+    "glass": "margarita glass"
+  },
+  {
+    "id": "rumAndCoke",
+    "name": "Rum & Coke",
+    "items": [
+      {
+        "ingredientId": "rum",
+        "parts": 1
+      },
+      {
+        "ingredientId": "coke",
+        "parts": 1
+      }
+    ]
+  },
+  {
+    "id": "tequilaSunrise",
+    "name": "Tequila sunrise",
+    "items": [
+      {
+        "ingredientId": "tequila",
+        "parts": 1
+      },
+      {
+        "ingredientId": "orangeJuice",
+        "parts": 1
+      },
+      {
+        "ingredientId": "grenadine",
+        "parts": 1
+      }
+    ]
+  }
+]

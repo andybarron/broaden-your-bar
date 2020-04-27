@@ -1,8 +1,9 @@
+import data from "./recipes.json"
+
 interface RecipeData {
+  id: string
   name: string
-  items: {
-    [ingredientId: string]: { parts?: number; extraInstructions?: string }
-  }
+  items: { ingredientId: string; parts?: number; extraInstructions?: string }[]
   glass?: string
 }
 
@@ -10,43 +11,17 @@ type AllRecipeData = {
   [id: string]: RecipeData
 }
 
-/**
- * Recipe list input data
- */
-export const recipeData: AllRecipeData = {
-  rumAndCoke: {
-    name: "Rum & Coke",
-    items: {
-      rum: {},
-      coke: {},
-    },
-  },
-  tequilaSunrise: {
-    name: "Tequila sunrise",
-    items: {
-      tequila: {},
-      orangeJuice: {},
-      grenadine: {},
-    },
-  },
-  cherryBourbonSmash: {
-    name: "Cherry bourbon smash",
-    items: {
-      bourbon: {},
-      lemonJuice: {},
-      marischinoCherry: { parts: 3, extraInstructions: "muddled" },
-      drPepper: {},
-    },
-  },
-  margarita: {
-    name: "Margarita",
-    items: {
-      tequila: { parts: 3 },
-      limeJuice: { parts: 2 },
-      simpleSyrup: {},
-      tripleSec: {},
-      salt: {},
-    },
-    glass: "margarita glass",
-  },
+// how tf else do I do this
+const typedData = JSON.parse(JSON.stringify(data)) as RecipeData[]
+
+const getRecipeData = (): AllRecipeData => {
+  const allRecipeData: AllRecipeData = {}
+
+  typedData.forEach(d => {
+    allRecipeData[d.id] = d
+  })
+
+  return allRecipeData
 }
+
+export const recipeData: AllRecipeData = getRecipeData()

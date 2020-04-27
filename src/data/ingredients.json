@@ -1,0 +1,73 @@
+[
+  {
+    "name": "coffee liqueur",
+    "id": "coffeeLiqueur"
+  },
+  {
+    "name": "Coke",
+    "id": "coke"
+  },
+  {
+    "name": "Dr.Pepper",
+    "id": "drPepper"
+  },
+  {
+    "name": "lemon juice",
+    "id": "lemonJuice"
+  },
+  {
+    "name": "lime juice",
+    "id": "limeJuice"
+  },
+  {
+    "name": "maraschino cherry",
+    "namePlural": "maraschino cherries",
+    "isGarnish": true,
+    "id": "marischinoCherry"
+  },
+  {
+    "name": "orange juice",
+    "id": "orangeJuice"
+  },
+  {
+    "name": "simple syrup",
+    "id": "simpleSyrup"
+  },
+  {
+    "name": "triple sec",
+    "id": "tripleSec"
+  },
+  {
+    "name": "bourbon",
+    "id": "bourbon"
+  },
+  {
+    "name": "grenadine",
+    "id": "grenadine"
+  },
+  {
+    "name": "rum",
+    "id": "rum"
+  },
+  {
+    "name": "salt",
+    "isGarnish": true,
+    "id": "salt"
+  },
+  {
+    "name": "soda",
+    "id": "soda"
+  },
+  {
+    "name": "tequila",
+    "id": "tequila"
+  },
+  {
+    "name": "vodka",
+    "id": "vodka"
+  },
+  {
+    "name": "whiskey",
+    "id": "whiskey"
+  }
+]
