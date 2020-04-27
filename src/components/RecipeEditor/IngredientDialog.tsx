@@ -150,7 +150,11 @@ export function IngredientDialog({
         <Button onClick={onCancel} color="primary">
           Cancel
         </Button>
-        <Button onClick={completeDialog} color="primary">
+        <Button
+          onClick={completeDialog}
+          color="primary"
+          disabled={!ingredientId || !ingredientName}
+        >
           {completeText}
         </Button>
       </DialogActions>

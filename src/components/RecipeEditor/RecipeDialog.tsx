@@ -101,6 +101,19 @@ export function RecipeDialog({
     setNewRecipeItemEi("")
   }
 
+  const completeDialog = () => {
+    onComplete(getNewRecipe())
+
+    // Reset Recipe
+    setRecipeId("")
+    setRecipeName("")
+    setRecipeGlass("")
+    setRecipeItemList([])
+    setNewRecipeItemIngId("")
+    setNewRecipeItemParts(0)
+    setNewRecipeItemEi("")
+  }
+
   const title = recipeToUpdate ? "Edit Recipe" : "Add Recipe"
   const completeText = recipeToUpdate ? "Update" : "Create"
 
@@ -199,7 +212,11 @@ export function RecipeDialog({
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" onClick={handleAddRecipeItem}>
+            <Button
+              variant="contained"
+              onClick={handleAddRecipeItem}
+              disabled={!newRecipeItemIngId}
+            >
               Add
             </Button>
           </Grid>
@@ -219,7 +236,11 @@ export function RecipeDialog({
         <Button onClick={onCancel} color="primary">
           Cancel
         </Button>
-        <Button onClick={() => onComplete(getNewRecipe())} color="primary">
+        <Button
+          onClick={completeDialog}
+          color="primary"
+          disabled={!recipeId || !recipeName || recipeItemList.length === 0}
+        >
           {completeText}
         </Button>
       </DialogActions>
