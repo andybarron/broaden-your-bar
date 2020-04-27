@@ -19,11 +19,13 @@ const _ingredientDataTypeCheck: Record<
   Optional<IngredientData, "name">
 > = ingredientData
 
-const entries = Object.entries(ingredientData)
-const sortedEntries = sortBy(entries, entry => entry[1].name?.toLowerCase)
+const allIngredients = Object.entries(ingredientData)
+const sortedIngredients = sortBy(allIngredients, entry =>
+  entry[1].name?.toLowerCase(),
+)
 
 export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
-  sortedEntries.map(([id, data]) => {
+  sortedIngredients.map(([id, data]) => {
     return [
       id as any,
       {
@@ -35,19 +37,22 @@ export const ingredientMap: Map<IngredientId, Ingredient> = new Map(
   }),
 )
 
+const allRecipes = Object.entries(recipeData)
+const sortedRecipes = sortBy(allRecipes, entry => entry[1].name.toLowerCase())
+
 export const recipeMap: Map<string, Recipe> = new Map(
-  Object.entries(recipeData).map(([id, data]) => {
+  sortedRecipes.map(([id, data]) => {
     return [
       id,
       {
         id,
         name: data.name,
         items: sortBy(
-          Object.entries(data.items).map(([id, data]) => {
+          data.items.map(data => {
             return {
-              ingredientId: id,
-              parts: (data as any).parts ?? 1, // TODO: fix shitty typing
-              extraInstructions: (data as any).extraInstructions ?? "",
+              ingredientId: data.ingredientId,
+              parts: data.parts ?? 0,
+              extraInstructions: data.extraInstructions,
             }
           }),
           item => (ingredientData[item.ingredientId].isGarnish ? 1 : 0),

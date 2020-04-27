@@ -1,13 +1,13 @@
 import React from "react"
-import { Recipe, Ingredient } from "../models"
+import { Recipe } from "../models"
 import { Typography } from "@material-ui/core"
+import { printRecipeItem } from "../utils/RecipeItemUtils"
 
 export interface RecipeViewProps {
-  ingredientMap: Map<string, Ingredient>
   recipe: Recipe
 }
 
-export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
+export function RecipeView({ recipe }: RecipeViewProps) {
   const { name, items, glass } = recipe
   return (
     <div>
@@ -18,31 +18,15 @@ export function RecipeView({ ingredientMap, recipe }: RecipeViewProps) {
         {glass !== undefined && glass.length !== 0 ? "Serve in a " + glass : ""}
       </Typography>
       <ul>
-        {items.map(({ ingredientId: id, parts, extraInstructions }) => {
-          const key = id
-          const plural = parts > 1
-          const name = ingredientMap.get(id)?.name ?? `[${id}]`
-          const namePlural = ingredientMap.get(id)?.namePlural ?? `[${id}]`
-          const isNonEnumerated = ingredientMap.get(id)?.isNonEnumerated
-
-          if (ingredientMap.get(id)?.isGarnish) {
-            return (
-              <li key={key}>
-                <Typography component="span">
-                  {isNonEnumerated ? "" : parts} {plural ? namePlural : name}{" "}
-                  {extraInstructions} {"as garnish"}
-                </Typography>
-              </li>
-            )
-          } else {
-            return (
-              <li key={key}>
-                <Typography component="span">
-                  {parts} {plural ? "parts" : "part"} {name}
-                </Typography>
-              </li>
-            )
-          }
+        {items.map(recipeItem => {
+          const key = recipeItem.ingredientId
+          return (
+            <li key={key}>
+              <Typography component="span">
+                {printRecipeItem(recipeItem)}
+              </Typography>
+            </li>
+          )
         })}
       </ul>
     </div>
