@@ -129,6 +129,7 @@ export function RecipeDialog({
           <Grid item xs={6}>
             <TextField
               required
+              disabled={!!recipeToUpdate}
               fullWidth
               error={hasIdError}
               value={recipeId}
