@@ -8,23 +8,26 @@ export function printRecipeItem(
   const ingredient = customIngredients
     ? customIngredients.filter(i => i.id === recipeItem.ingredientId)[0]
     : ingredientMap.get(recipeItem.ingredientId)!
+
+  const unitsString = ingredient.isGarnish
+    ? ""
+    : recipeItem.parts > 1
+    ? ingredient.unitPlural ?? "parts"
+    : ingredient.unit ?? "part"
+
+  const partsInfo =
+    recipeItem.parts > 0 ? `${recipeItem.parts} ${unitsString}` : ""
+
   const displayName =
     recipeItem.parts > 1
       ? ingredient.namePlural ?? ingredient.name
       : ingredient.name
-  const garnishInfo = ingredient.isGarnish
-    ? recipeItem.extraInstructions
-      ? `${recipeItem.extraInstructions} as garnish`
-      : `as garnish`
-    : ""
 
-  const partsString = ingredient.isGarnish
-    ? ""
-    : recipeItem.parts > 1
-    ? "parts"
-    : "part"
-  const partsInfo =
-    recipeItem.parts > 0 ? `${recipeItem.parts} ${partsString}` : ""
+  const extraInstructions = recipeItem.extraInstructions ?? ""
 
-  return `${partsInfo} ${displayName} ${garnishInfo}`
+  const garnishInfo = ingredient.isGarnish ? "as garnish" : ""
+
+  return `${partsInfo} ${displayName} ${extraInstructions} ${garnishInfo}`
+    .trim() // remove trailing whitespace
+    .replace(/\s+/g, " ") // remove multiple inner spaces
 }

@@ -1,5 +1,12 @@
 import React from "react"
-import { Container, Typography, Grid, Box } from "@material-ui/core"
+import {
+  Container,
+  Typography,
+  Grid,
+  Box,
+  FormControlLabel,
+  Checkbox,
+} from "@material-ui/core"
 import {
   IngredientId,
   IngredientChecklist,
@@ -46,20 +53,14 @@ export function BarApp() {
           <Grid container>
             {[...[...ingredientMap.entries()].entries()].map(
               ([index, [id, { name }]]) => {
-                const last = index === ingredientMap.size - 1
                 return (
                   <Grid container item xs={2} key={id}>
-                    <Typography>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={Boolean(checklist[id])}
-                          onChange={() => toggleIngredient(id)}
-                        />
-                        {name}{" "}
-                      </label>
-                      {!last && " "}
-                    </Typography>
+                    <FormControlLabel
+                      checked={Boolean(checklist[id])}
+                      onChange={() => toggleIngredient(id)}
+                      control={<Checkbox color="primary" />}
+                      label={name}
+                    />
                   </Grid>
                 )
               },

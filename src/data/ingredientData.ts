@@ -5,6 +5,8 @@ interface IngredientData {
     name?: string
     namePlural?: string
     isGarnish?: boolean // TODO garnish type
+    unit?: string
+    unitPlural?: string
   }
 }
 
@@ -13,10 +15,14 @@ const parseIngredientData = () => {
   data.forEach(ingredient => {
     ingredientData[ingredient.id] = {
       name: ingredient.name,
-      namePlural: ingredient.namePlural ? ingredient.namePlural : undefined,
-      isGarnish: ingredient.isGarnish ? ingredient.isGarnish : undefined,
+      namePlural: ingredient.namePlural,
+      isGarnish: ingredient.isGarnish,
+      unit: ingredient.unit,
+      unitPlural: ingredient.unitPlural,
     }
   })
+
+  console.log(ingredientData)
 
   return ingredientData
 }
