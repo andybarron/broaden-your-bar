@@ -116,31 +116,31 @@ export function RecipeDialog({
           <Grid item xs={6}>
             <TextField
               required
+              fullWidth
               error={hasIdError}
               value={recipeId}
               onChange={event => handleRecipeIdChange(event.target.value)}
               label="Id"
               variant="outlined"
-              style={{ minWidth: "100%" }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               required
+              fullWidth
               value={recipeName}
               onChange={event => setRecipeName(event.target.value)}
               label="Name"
               variant="outlined"
-              style={{ minWidth: "100%" }}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
               value={recipeGlass}
               onChange={event => setRecipeGlass(event.target.value)}
               label="Serving glass (optional)"
               variant="outlined"
-              style={{ minWidth: "100%" }}
             />
           </Grid>
         </Grid>
@@ -151,11 +151,7 @@ export function RecipeDialog({
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <FormControl
-              required
-              variant="outlined"
-              style={{ minWidth: "100%" }}
-            >
+            <FormControl required fullWidth variant="outlined">
               <InputLabel id="recipe-item-select">Ingredient</InputLabel>
               <Select
                 labelId="recipe-item-select"
@@ -180,6 +176,7 @@ export function RecipeDialog({
           </Grid>
           <Grid item xs={6}>
             <TextField
+              fullWidth
               value={newRecipeItemParts}
               onChange={event =>
                 setNewRecipeItemParts(Number.parseInt(event.target.value, 10))
@@ -190,16 +187,15 @@ export function RecipeDialog({
                 shrink: true,
               }}
               variant="outlined"
-              style={{ minWidth: "100%" }}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
               value={newRecipeItemEi}
               onChange={event => setNewRecipeItemEi(event.target.value)}
               label="Extra Instructions (optional)"
               variant="outlined"
-              style={{ minWidth: "100%" }}
             />
           </Grid>
           <Grid item xs={12}>

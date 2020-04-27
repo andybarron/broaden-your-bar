@@ -39,6 +39,12 @@ export function IngredientDialog({
   const [ingredientGarnish, setIngredientGarnish] = React.useState(
     ingredientToUpdate?.isGarnish ?? false,
   )
+  const [ingredientUnit, setIngredientUnit] = React.useState<string>(
+    ingredientToUpdate?.unit ?? "",
+  )
+  const [ingredientUnitPlural, setIngredientUnitPlural] = React.useState<
+    string
+  >(ingredientToUpdate?.unitPlural ?? "")
 
   React.useEffect(() => {
     if (ingredientToUpdate) {
@@ -46,6 +52,8 @@ export function IngredientDialog({
       setIngredientName(ingredientToUpdate.name)
       setIngredientPlural(ingredientToUpdate.namePlural ?? "")
       setIngredientGarnish(ingredientToUpdate.isGarnish ?? false)
+      setIngredientUnit(ingredientToUpdate.unit ?? "")
+      setIngredientUnitPlural(ingredientToUpdate.unitPlural ?? "")
     }
   }, [ingredientToUpdate])
 
@@ -79,10 +87,11 @@ export function IngredientDialog({
     >
       <DialogTitle id="ingredient-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <Grid container item xs={6} spacing={1}>
-          <Grid item xs={12}>
+        <Grid container spacing={1}>
+          <Grid item xs={6}>
             <TextField
               required
+              fullWidth
               disabled={!!ingredientToUpdate}
               value={ingredientId}
               onChange={event => setIngredientId(event.target.value)}
@@ -90,9 +99,10 @@ export function IngredientDialog({
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               required
+              fullWidth
               value={ingredientName}
               onChange={event => setIngredientName(event.target.value)}
               label="Name"
@@ -101,9 +111,28 @@ export function IngredientDialog({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
               value={ingredientPlural}
               onChange={event => setIngredientPlural(event.target.value)}
               label="Name Plural"
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              value={ingredientUnit}
+              onChange={event => setIngredientUnit(event.target.value)}
+              label="Unit"
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              value={ingredientUnitPlural}
+              onChange={event => setIngredientUnitPlural(event.target.value)}
+              label="Unit Plural"
               variant="outlined"
             />
           </Grid>
