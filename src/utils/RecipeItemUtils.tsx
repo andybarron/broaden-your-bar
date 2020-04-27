@@ -13,7 +13,9 @@ export function printRecipeItem(
       ? ingredient.namePlural ?? ingredient.name
       : ingredient.name
   const garnishInfo = ingredient.isGarnish
-    ? `${recipeItem.extraInstructions} as garnish`
+    ? recipeItem.extraInstructions
+      ? `${recipeItem.extraInstructions} as garnish`
+      : `as garnish`
     : ""
 
   const partsString = ingredient.isGarnish
