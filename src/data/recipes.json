@@ -50,9 +50,47 @@
     "glass": "margarita glass"
   },
   {
+    "id": "moscowMule",
+    "name": "Moscow Mule",
+    "glass": "Copper Mug",
+    "items": [
+      {
+        "ingredientId": "vodka",
+        "parts": 2
+      },
+      {
+        "ingredientId": "gingerBeer",
+        "parts": 5
+      },
+      {
+        "ingredientId": "limeJuice",
+        "parts": 1
+      }
+    ]
+  },
+  {
+    "id": "negroni",
+    "name": "Negroni",
+    "items": [
+      {
+        "ingredientId": "gin",
+        "parts": 1,
+        "extraInstructions": "Stir ingredients with ice"
+      },
+      {
+        "ingredientId": "campari",
+        "parts": 1
+      },
+      {
+        "ingredientId": "sweetVermouth",
+        "parts": 1
+      }
+    ],
+    "glass": ""
+  },
+  {
     "id": "oldFashioned",
     "name": "Old fashioned",
-    "glass": "",
     "items": [
       {
         "ingredientId": "whiskey",
@@ -64,14 +102,15 @@
         "extraInstructions": "muddled"
       },
       {
-        "ingredientId": "orangePeel",
-        "parts": 0
-      },
-      {
         "ingredientId": "bitters",
         "parts": 1
+      },
+      {
+        "ingredientId": "orangePeel",
+        "parts": 0
       }
-    ]
+    ],
+    "glass": ""
   },
   {
     "id": "rumAndCoke",

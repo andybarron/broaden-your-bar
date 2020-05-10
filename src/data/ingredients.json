@@ -6,42 +6,54 @@
     "unitPlural": "dashes"
   },
   {
-    "name": "bourbon",
-    "id": "bourbon"
+    "id": "bourbon",
+    "name": "bourbon"
   },
   {
-    "name": "coffee liqueur",
-    "id": "coffeeLiqueur"
+    "id": "campari",
+    "name": "Campari"
   },
   {
-    "name": "Coke",
-    "id": "coke"
+    "id": "coffeeLiqueur",
+    "name": "coffee liqueur"
   },
   {
-    "name": "Dr.Pepper",
-    "id": "drPepper"
+    "id": "coke",
+    "name": "Coke"
   },
   {
-    "name": "grenadine",
-    "id": "grenadine"
+    "id": "drPepper",
+    "name": "Dr.Pepper"
   },
   {
-    "name": "lemon juice",
-    "id": "lemonJuice"
+    "id": "gin",
+    "name": "Gin"
   },
   {
-    "name": "lime juice",
-    "id": "limeJuice"
+    "id": "gingerBeer",
+    "name": "Ginger Beer"
   },
   {
+    "id": "grenadine",
+    "name": "grenadine"
+  },
+  {
+    "id": "lemonJuice",
+    "name": "lemon juice"
+  },
+  {
+    "id": "limeJuice",
+    "name": "lime juice"
+  },
+  {
+    "id": "marischinoCherry",
     "name": "maraschino cherry",
     "namePlural": "maraschino cherries",
-    "isGarnish": true,
-    "id": "marischinoCherry"
+    "isGarnish": true
   },
   {
-    "name": "orange juice",
-    "id": "orangeJuice"
+    "id": "orangeJuice",
+    "name": "orange juice"
   },
   {
     "id": "orangePeel",
@@ -49,43 +61,47 @@
     "isGarnish": true
   },
   {
-    "name": "rum",
-    "id": "rum"
+    "id": "rum",
+    "name": "rum"
   },
   {
+    "id": "salt",
     "name": "salt",
-    "isGarnish": true,
-    "id": "salt"
+    "isGarnish": true
   },
   {
-    "name": "simple syrup",
-    "id": "simpleSyrup"
+    "id": "simpleSyrup",
+    "name": "simple syrup"
   },
   {
-    "name": "soda",
-    "id": "soda"
+    "id": "soda",
+    "name": "soda"
   },
   {
+    "id": "sugarCube",
     "name": "sugar cube",
     "namePlural": "sugar cubes",
-    "id": "sugarCube",
     "unit": "",
     "unitPlural": ""
   },
   {
-    "name": "tequila",
-    "id": "tequila"
+    "id": "sweetVermouth",
+    "name": "Sweet Vermouth"
   },
   {
-    "name": "triple sec",
-    "id": "tripleSec"
+    "id": "tequila",
+    "name": "tequila"
   },
   {
-    "name": "vodka",
-    "id": "vodka"
+    "id": "tripleSec",
+    "name": "triple sec"
   },
   {
-    "name": "whiskey",
-    "id": "whiskey"
+    "id": "vodka",
+    "name": "vodka"
+  },
+  {
+    "id": "whiskey",
+    "name": "whiskey"
   }
 ]
