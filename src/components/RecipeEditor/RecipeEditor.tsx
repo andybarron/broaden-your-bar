@@ -102,7 +102,7 @@ export function RecipeEditor() {
   const handleCreateNewIngredient = (ingredient: Ingredient) => {
     let newIngredients = [...ingredients]
     newIngredients.push(ingredient)
-    newIngredients = sortBy(newIngredients, (r) => r.name.toLowerCase())
+    newIngredients = sortBy(newIngredients, (i) => i.name.toLowerCase())
     setIngredients(newIngredients)
     setShowAddIngredient(false)
 
