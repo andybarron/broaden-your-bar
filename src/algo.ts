@@ -11,8 +11,10 @@ export function computeAvailableRecipes(
 ): string[] {
   let selectedIngredients = new Set(ingredients)
   let results = allRecipes
-    .filter(r => r.items.every(i => selectedIngredients.has(i.ingredientId)))
-    .map(r => r.id)
+    .filter((r) =>
+      r.items.every((i) => selectedIngredients.has(i.ingredientId)),
+    )
+    .map((r) => r.id)
   return results
 }
 
@@ -21,7 +23,7 @@ export function computeAvailableRecipes(
  * ingredient to buy which would maximize the increase in available recipes, or null
  * if all recipes are available
  */
-export function computeNextIngredient(
+export function computeNextIngredients(
   ingredients: string[],
   allRecipes: Recipe[],
 ): string[] | null {
@@ -76,8 +78,8 @@ export function computeNextIngredient(
 
   // get all the ingredients that have that amount of matched recipes
   const bestIngredients = [...ingredientToNumRecipeMap.entries()]
-    .filter(a => a[1] === bestCount)
-    .map(a => ingredientMap.get(a[0])?.name ?? "")
+    .filter((a) => a[1] === bestCount)
+    .map((a) => ingredientMap.get(a[0])?.name ?? "")
 
   return bestIngredients
 }

@@ -13,14 +13,14 @@ import {
   ingredientMap,
   recipeMap,
 } from "../data"
-import { computeAvailableRecipes, computeNextIngredient } from "../algo"
+import { computeAvailableRecipes, computeNextIngredients } from "../algo"
 import { RecipeView } from "./RecipeView"
 
 export function BarApp() {
   const [checklist, setChecklist] = React.useState<IngredientChecklist>({})
 
   const availableIngredients = Object.keys(checklist).filter(
-    id => checklist[id as IngredientId],
+    (id) => checklist[id as IngredientId],
   ) as IngredientId[]
 
   const availableRecipes = React.useMemo(() => {
@@ -29,12 +29,12 @@ export function BarApp() {
     ])
   }, [availableIngredients])
 
-  const nextIngredient = React.useMemo(() => {
-    return computeNextIngredient(availableIngredients, [...recipeMap.values()])
+  const nextIngredients = React.useMemo(() => {
+    return computeNextIngredients(availableIngredients, [...recipeMap.values()])
   }, [availableIngredients])
 
   function toggleIngredient(id: IngredientId) {
-    setChecklist(prev => ({
+    setChecklist((prev) => ({
       ...prev,
       [id]: !prev[id],
     }))
@@ -71,13 +71,20 @@ export function BarApp() {
           <Typography variant="h5" component="h2" gutterBottom>
             What to buy
           </Typography>
-          {Boolean(nextIngredient) && (
+          {Boolean(nextIngredients) && (
             <Typography component="span">
               To maximize your drink list, you should buy:{" "}
-              {nextIngredient?.join(" or ")}
+              {nextIngredients?.map((r, i) => (
+                <React.Fragment key={r}>
+                  <a href={"https://www.amazon.com/s?k=" + r}>
+                    {encodeURIComponent(r)}
+                  </a>
+                  {i !== nextIngredients.length - 1 ? " or " : ""}
+                </React.Fragment>
+              ))}
             </Typography>
           )}
-          {!nextIngredient && (
+          {!nextIngredients && (
             <span>Buy whatever you want next, it doesn't matter</span>
           )}
         </Box>
@@ -86,7 +93,7 @@ export function BarApp() {
             Available recipes
           </Typography>
           <div>
-            {availableRecipes.map(id => {
+            {availableRecipes.map((id) => {
               const key = id
               const recipe = recipeMap.get(id)!
               return <RecipeView key={key} recipe={recipe} />
