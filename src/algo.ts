@@ -26,7 +26,7 @@ export function computeAvailableRecipes(
 export function computeNextIngredients(
   ingredients: string[],
   allRecipes: Recipe[],
-): string[] | null {
+): string[] {
   // Find each recipe that's one ingredient from being complete,
   // Add those to a map that keeps track of how many recipies would be doable with them
   const alreadySelectedIngredients = new Set(ingredients)

@@ -46,12 +46,8 @@ export function BarApp() {
 
   React.useEffect(() => {
     const selectStr = localStorage.getItem("selected") ?? "[]"
-    const selectJson = JSON.parse(selectStr)
-    const savedChecklist: IngredientChecklist = {}
-    Object.keys(selectJson).forEach((id) => {
-      savedChecklist[id] = selectJson[id]
-    })
-    setChecklist(savedChecklist)
+    const savedSelections = JSON.parse(selectStr) as IngredientChecklist
+    setChecklist(savedSelections)
   }, [])
 
   return (
@@ -85,21 +81,25 @@ export function BarApp() {
           <Typography variant="h5" component="h2" gutterBottom>
             What to buy
           </Typography>
-          {Boolean(nextIngredients) && (
+          {nextIngredients.length > 0 && (
             <Typography component="span">
               To maximize your drink list, you should buy:{" "}
               {nextIngredients?.map((r, i) => (
                 <React.Fragment key={r}>
-                  <a href={"https://www.amazon.com/s?k=" + r}>
-                    {encodeURIComponent(r)}
+                  <a
+                    href={"https://www.amazon.com/s?k=" + encodeURIComponent(r)}
+                  >
+                    {r}
                   </a>
                   {i !== nextIngredients.length - 1 ? " or " : ""}
                 </React.Fragment>
               ))}
             </Typography>
           )}
-          {!nextIngredients && (
-            <span>Buy whatever you want next, it doesn't matter</span>
+          {nextIngredients.length < 1 && (
+            <Typography>
+              <span>Buy whatever you want next, it doesn't matter</span>
+            </Typography>
           )}
         </Box>
         <Box mb={2}>
@@ -117,6 +117,4 @@ export function BarApp() {
       </div>
     </Container>
   )
-
-  // return <RecipeEditor></RecipeEditor>
 }
