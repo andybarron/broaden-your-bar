@@ -36,6 +36,57 @@ export function RecipeEditor() {
     ...recipeMap.values(),
   ])
 
+  // Local Storage methods
+  const getSavedIngredients = () => {
+    return JSON.parse(
+      localStorage.getItem("ingredients") ?? "[]",
+    ) as Ingredient[]
+  }
+
+  const getSavedRecipes = () => {
+    return JSON.parse(localStorage.getItem("recipes") ?? "[]") as Recipe[]
+  }
+
+  const storeSavedIngredients = (savedIngredients: Ingredient[]) => {
+    localStorage.setItem("ingredients", JSON.stringify(savedIngredients))
+  }
+
+  const storeSavedRecipes = (savedRecipes: Recipe[]) => {
+    localStorage.setItem("recipes", JSON.stringify(savedRecipes))
+  }
+
+  // On page load, load any saved ingredients and recipes
+  React.useEffect(() => {
+    const savedIngredients = getSavedIngredients()
+    const savedRecipes = getSavedRecipes()
+
+    const loadedIngredientIds = ingredients.map((i) => i.id)
+    const loadedRecipeIds = recipes.map((i) => i.id)
+
+    // Clean up Local Storage
+    // Remove any ingredients/recipes that are already saved
+    const newStorageIngredients = savedIngredients.filter(
+      (i) => loadedIngredientIds.indexOf(i.id) < 0,
+    )
+    const newStorageRecipes = savedRecipes.filter(
+      (r) => loadedRecipeIds.indexOf(r.id) < 0,
+    )
+
+    storeSavedIngredients(newStorageIngredients)
+    storeSavedRecipes(newStorageRecipes)
+
+    // Add all storaged ingredients/recipes
+    const newIngredients = sortBy(
+      ingredients.concat(newStorageIngredients),
+      (i) => i.name.toLowerCase(),
+    )
+    const newRecipes = sortBy(recipes.concat(newStorageRecipes), (i) =>
+      i.name.toLowerCase(),
+    )
+    setIngredients(newIngredients)
+    setRecipes(newRecipes)
+  }, [])
+
   // Snackbar
   const [openSnackbar, setOpenSnackbar] = React.useState(false)
 
@@ -51,18 +102,26 @@ export function RecipeEditor() {
   const handleCreateNewIngredient = (ingredient: Ingredient) => {
     let newIngredients = [...ingredients]
     newIngredients.push(ingredient)
-    newIngredients = sortBy(newIngredients, i => i.name.toLowerCase())
+    newIngredients = sortBy(newIngredients, (i) => i.name.toLowerCase())
     setIngredients(newIngredients)
     setShowAddIngredient(false)
+
+    const savedIngredients = getSavedIngredients()
+    savedIngredients.push(ingredient)
+    storeSavedIngredients(savedIngredients)
   }
 
   // Add Recipe Methods
   const handleCreateNewRecipe = (recipe: Recipe) => {
     let newRecipes = [...recipes]
     newRecipes.push(recipe)
-    newRecipes = sortBy(newRecipes, r => r.name.toLowerCase())
+    newRecipes = sortBy(newRecipes, (r) => r.name.toLowerCase())
     setRecipes(newRecipes)
     setShowAddRecipe(false)
+
+    const savedRecipes = getSavedRecipes()
+    savedRecipes.push(recipe)
+    storeSavedRecipes(savedRecipes)
   }
 
   // Edit Ingredient Methods
@@ -71,12 +130,27 @@ export function RecipeEditor() {
     setShowEditIngredient(true)
   }
 
+  // Remove Ingredient Methods
+  const removeIngredient = (ingredient: Ingredient) => {
+    const newIngredients = ingredients.filter((i) => i.id !== ingredient.id)
+    setIngredients(newIngredients)
+    setShowEditIngredient(false)
+
+    const savedIngredients = getSavedIngredients()
+    if (savedIngredients.map((s) => s.id).indexOf(ingredient.id) > -1) {
+      const newSavedIngredients = savedIngredients.filter(
+        (s) => s.id != ingredient.id,
+      )
+      storeSavedIngredients(newSavedIngredients)
+    }
+  }
+
   const handleEditIngredient = (ingredient: Ingredient) => {
     let newIngredients = [...ingredients]
-    const index = newIngredients.findIndex(i => i.id === ingredient.id)
+    const index = newIngredients.findIndex((i) => i.id === ingredient.id)
     newIngredients.splice(index, 1)
     newIngredients.push(ingredient)
-    newIngredients = sortBy(newIngredients, i => i.name.toLowerCase())
+    newIngredients = sortBy(newIngredients, (i) => i.name.toLowerCase())
     setIngredients(newIngredients)
     setShowEditIngredient(false)
   }
@@ -89,10 +163,23 @@ export function RecipeEditor() {
 
   const handleEditRecipe = (recipe: Recipe) => {
     const newRecipes = [...recipes]
-    const index = newRecipes.findIndex(r => r.id === recipe.id)
+    const index = newRecipes.findIndex((r) => r.id === recipe.id)
     newRecipes[index] = recipe
     setRecipes(newRecipes)
     setShowEditRecipe(false)
+  }
+
+  // Remove Recipe Methods
+  const removeRecipe = (recipe: Recipe) => {
+    const newRecipes = recipes.filter((r) => r.id !== recipe.id)
+    setRecipes(newRecipes)
+    setShowEditRecipe(false)
+
+    const savedRecipes = getSavedRecipes()
+    if (savedRecipes.map((s) => s.id).indexOf(recipe.id) > -1) {
+      const newSavedRecipes = savedRecipes.filter((s) => s.id != recipe.id)
+      storeSavedRecipes(newSavedRecipes)
+    }
   }
 
   return (
@@ -106,6 +193,7 @@ export function RecipeEditor() {
       />
       <RecipeDialog
         open={showEditRecipe}
+        onRemove={removeRecipe}
         onComplete={handleEditRecipe}
         onClose={() => setShowEditRecipe(false)}
         onCancel={() => setShowEditRecipe(false)}
@@ -120,6 +208,7 @@ export function RecipeEditor() {
       />
       <IngredientDialog
         open={showEditIngredient}
+        onRemove={removeIngredient}
         onComplete={handleEditIngredient}
         onClose={() => setShowEditIngredient(false)}
         onCancel={() => setShowEditIngredient(false)}
@@ -139,7 +228,7 @@ export function RecipeEditor() {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            {ingredients.map(ingredient => {
+            {ingredients.map((ingredient) => {
               return (
                 <Chip
                   key={ingredient.id}
@@ -162,7 +251,7 @@ export function RecipeEditor() {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            {recipes.map(recipe => {
+            {recipes.map((recipe) => {
               return (
                 <Chip
                   key={recipe.id}
