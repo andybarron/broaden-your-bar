@@ -10,10 +10,12 @@ import {
   DialogContent,
   DialogTitle,
 } from "@material-ui/core"
+import red from "@material-ui/core/colors/red"
 import { Ingredient } from "../../models"
 
 export interface IngredientDialogProps {
   open: boolean
+  onRemove?: (ingredient: Ingredient) => void
   onClose: () => void
   onComplete: (ingredient: Ingredient) => void
   onCancel: () => void
@@ -22,6 +24,7 @@ export interface IngredientDialogProps {
 
 export function IngredientDialog({
   open,
+  onRemove,
   onClose,
   onComplete,
   onCancel,
@@ -69,7 +72,7 @@ export function IngredientDialog({
     }
   }
 
-  const completeDialog = () => {
+  const completeDialogAction = () => {
     onComplete(getIngredient())
 
     // Reset Ingredient
@@ -77,6 +80,11 @@ export function IngredientDialog({
     setIngredientName("")
     setIngredientPlural("")
     setIngredientGarnish(false)
+  }
+
+  const removeDialogAction = () => {
+    const val = window.confirm("Are you sure?")
+    if (val) onRemove!(getIngredient())
   }
 
   return (
@@ -94,7 +102,7 @@ export function IngredientDialog({
               fullWidth
               disabled={!!ingredientToUpdate}
               value={ingredientId}
-              onChange={event => setIngredientId(event.target.value)}
+              onChange={(event) => setIngredientId(event.target.value)}
               label="Id"
               variant="outlined"
             />
@@ -104,7 +112,7 @@ export function IngredientDialog({
               required
               fullWidth
               value={ingredientName}
-              onChange={event => setIngredientName(event.target.value)}
+              onChange={(event) => setIngredientName(event.target.value)}
               label="Name"
               variant="outlined"
             />
@@ -113,7 +121,7 @@ export function IngredientDialog({
             <TextField
               fullWidth
               value={ingredientPlural}
-              onChange={event => setIngredientPlural(event.target.value)}
+              onChange={(event) => setIngredientPlural(event.target.value)}
               label="Name Plural"
               variant="outlined"
             />
@@ -122,7 +130,7 @@ export function IngredientDialog({
             <TextField
               fullWidth
               value={ingredientUnit}
-              onChange={event => setIngredientUnit(event.target.value)}
+              onChange={(event) => setIngredientUnit(event.target.value)}
               label="Unit"
               variant="outlined"
             />
@@ -131,7 +139,7 @@ export function IngredientDialog({
             <TextField
               fullWidth
               value={ingredientUnitPlural}
-              onChange={event => setIngredientUnitPlural(event.target.value)}
+              onChange={(event) => setIngredientUnitPlural(event.target.value)}
               label="Unit Plural"
               variant="outlined"
             />
@@ -147,11 +155,16 @@ export function IngredientDialog({
         </Grid>
       </DialogContent>
       <DialogActions>
+        {!!ingredientToUpdate && (
+          <Button onClick={removeDialogAction} style={{ color: red[900] }}>
+            Remove
+          </Button>
+        )}
         <Button onClick={onCancel} color="primary">
           Cancel
         </Button>
         <Button
-          onClick={completeDialog}
+          onClick={completeDialogAction}
           color="primary"
           disabled={!ingredientId || !ingredientName}
         >

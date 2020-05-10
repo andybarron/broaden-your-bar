@@ -14,11 +14,13 @@ import {
   DialogTitle,
   Chip,
 } from "@material-ui/core"
+import red from "@material-ui/core/colors/red"
 import { Ingredient, Recipe, RecipeItem } from "../../models"
 import { printRecipeItem } from "../../utils/RecipeItemUtils"
 
 export interface RecipeDialogProps {
   open: boolean
+  onRemove?: (recipe: Recipe) => void
   onComplete: (recipe: Recipe) => void
   onClose: () => void
   onCancel: () => void
@@ -28,6 +30,7 @@ export interface RecipeDialogProps {
 
 export function RecipeDialog({
   open,
+  onRemove,
   onComplete,
   onClose,
   onCancel,
@@ -54,7 +57,7 @@ export function RecipeDialog({
     }
   }, [recipeToUpdate])
 
-  const getNewRecipe = (): Recipe => {
+  const getRecipe = (): Recipe => {
     return {
       id: recipeId,
       name: recipeName,
@@ -81,7 +84,7 @@ export function RecipeDialog({
 
   const handleRemoveRecipeItem = (recipeItem: RecipeItem) => {
     const newRecipeItemList = recipeItemList.filter(
-      item => item.ingredientId !== recipeItem.ingredientId,
+      (item) => item.ingredientId !== recipeItem.ingredientId,
     )
     setRecipeItemList(newRecipeItemList)
   }
@@ -101,8 +104,8 @@ export function RecipeDialog({
     setNewRecipeItemEi("")
   }
 
-  const completeDialog = () => {
-    onComplete(getNewRecipe())
+  const completeDialogAction = () => {
+    onComplete(getRecipe())
 
     // Reset Recipe
     setRecipeId("")
@@ -112,6 +115,11 @@ export function RecipeDialog({
     setNewRecipeItemIngId("")
     setNewRecipeItemParts(0)
     setNewRecipeItemEi("")
+  }
+
+  const removeDialogAction = () => {
+    const val = window.confirm("Are you sure?")
+    if (val) onRemove!(getRecipe())
   }
 
   const title = recipeToUpdate ? "Edit Recipe" : "Add Recipe"
@@ -133,7 +141,7 @@ export function RecipeDialog({
               fullWidth
               error={hasIdError}
               value={recipeId}
-              onChange={event => handleRecipeIdChange(event.target.value)}
+              onChange={(event) => handleRecipeIdChange(event.target.value)}
               label="Id"
               variant="outlined"
             />
@@ -143,7 +151,7 @@ export function RecipeDialog({
               required
               fullWidth
               value={recipeName}
-              onChange={event => setRecipeName(event.target.value)}
+              onChange={(event) => setRecipeName(event.target.value)}
               label="Name"
               variant="outlined"
             />
@@ -152,7 +160,7 @@ export function RecipeDialog({
             <TextField
               fullWidth
               value={recipeGlass}
-              onChange={event => setRecipeGlass(event.target.value)}
+              onChange={(event) => setRecipeGlass(event.target.value)}
               label="Serving glass (optional)"
               variant="outlined"
             />
@@ -170,7 +178,7 @@ export function RecipeDialog({
               <Select
                 labelId="recipe-item-select"
                 value={newRecipeItemIngId}
-                onChange={event =>
+                onChange={(event) =>
                   handleChangeSelectedIngredient(event.target.value as string)
                 }
                 label="Ingredient"
@@ -178,7 +186,7 @@ export function RecipeDialog({
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {ingredients.map(i => {
+                {ingredients.map((i) => {
                   return (
                     <MenuItem value={i.id} key={i.id}>
                       {i.name}
@@ -192,7 +200,7 @@ export function RecipeDialog({
             <TextField
               fullWidth
               value={newRecipeItemParts}
-              onChange={event =>
+              onChange={(event) =>
                 setNewRecipeItemParts(Number.parseInt(event.target.value, 10))
               }
               label="Parts"
@@ -207,7 +215,7 @@ export function RecipeDialog({
             <TextField
               fullWidth
               value={newRecipeItemEi}
-              onChange={event => setNewRecipeItemEi(event.target.value)}
+              onChange={(event) => setNewRecipeItemEi(event.target.value)}
               label="Extra Instructions (optional)"
               variant="outlined"
             />
@@ -222,7 +230,7 @@ export function RecipeDialog({
             </Button>
           </Grid>
           <Grid item xs={12}>
-            {recipeItemList.map(recipeItem => (
+            {recipeItemList.map((recipeItem) => (
               <Chip
                 style={{ margin: "3px" }}
                 key={recipeItem.ingredientId}
@@ -234,11 +242,16 @@ export function RecipeDialog({
         </Grid>
       </DialogContent>
       <DialogActions>
+        {!!recipeToUpdate && (
+          <Button onClick={removeDialogAction} style={{ color: red[900] }}>
+            Remove
+          </Button>
+        )}
         <Button onClick={onCancel} color="primary">
           Cancel
         </Button>
         <Button
-          onClick={completeDialog}
+          onClick={completeDialogAction}
           color="primary"
           disabled={!recipeId || !recipeName || recipeItemList.length === 0}
         >
