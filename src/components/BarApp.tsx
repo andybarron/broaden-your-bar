@@ -34,11 +34,25 @@ export function BarApp() {
   }, [availableIngredients])
 
   function toggleIngredient(id: IngredientId) {
-    setChecklist((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
+    setChecklist((prev) => {
+      let newChecklist = {
+        ...prev,
+        [id]: !prev[id],
+      }
+      localStorage.setItem("selected", JSON.stringify(newChecklist))
+      return newChecklist
+    })
   }
+
+  React.useEffect(() => {
+    const selectStr = localStorage.getItem("selected") ?? "[]"
+    const selectJson = JSON.parse(selectStr)
+    const savedChecklist: IngredientChecklist = {}
+    Object.keys(selectJson).forEach((id) => {
+      savedChecklist[id] = selectJson[id]
+    })
+    setChecklist(savedChecklist)
+  }, [])
 
   return (
     <Container>
